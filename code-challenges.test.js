@@ -92,7 +92,8 @@ const filterLetterE = "e"
 // Process:
 // Create a function called certainWords that takes in an array and a string as arguments
 // Since we will be returning a subset of the original array of different length we can iterate with the filter method. 
-// As this will be case sensitive we can us the lowercase built in method with the value of each index, as well as the includes method to decide if that value includes the specified 
+// As this will be case sensitive we can use the lowercase built in method with the value of each index, as well as the includes method to decide if that value includes the specified character.
+// We then can return the appropriate elements. 
 
 
 
@@ -135,14 +136,49 @@ const hand4 = [7, 2, 7, 2, 7]
 // Expected output: true
 
 // b) Create the function that makes the test pass.
+//Pseudocode:
+// Input: An array of 5 numbers
+// Output: a true of false in regard to having a full house or not.
+// A full house consists of 5 cards so at first I need to make sure we only have 5 numbers.
+// I can use the sort method on the array to make it easier to identify pairs and 3 of a kinds. 
+// I also need to create two variables to store the values for our two and three of a kinds.
+// I need to keep a count to keep track of identical numbers.
+// I need to iterate the array so i can use a for loop.
+// Using the loop i can see if the index 1 is equal to index 0. If it is we can increment one to see if the next is also equal.
+// Once my loop says the next number is not equal then we can move to the next set of numbers using the same logic while the count resets. 
+// Last if both the two of a kind and three of a kind have a value we can return a full house as true, otherwise false. 
 
 const fullHouse = (arr) => {
-    
+    if (arr.length !== 5) return false
+
+    const sortArr = arr.sort((a,b) => a - b)
+
+    let twoOfAKind = 0
+    let threeOfKind = 0
+
+    let count = 1
+    for (let i = 1; i < sortArr.length; i++) {
+        if(sortArr[i] === sortArr[i - 1]){
+            count++
+        }else{ 
+            if (count === 2) {
+                twoOfAKind = sortArr[i - 1]
+            }else if (count === 3){
+                threeOfKind = sortArr[i - 1]
+            }
+            count = 1
+        } 
+    }
+   if (count === 2){
+    twoOfAKind = sortArr[sortArr.length - 1]
+   } else if (count === 3) {
+    threeOfKind = sortArr[sortArr.length -1]
+   }
+   return twoOfAKind !== 0 && threeOfKind !== 0
 }
+// PASS  ./code-challenges.test.js
+// fullHouse
+//   ✓ determines whether or not the array is a full house. (1 ms)
 
 
-
-
-
-
-// Create a function that takes in an array of 5 numbers and determines whether or not the array is a "full house". A full house is exactly one pair and one three of a kind.
+// THIS CHALLENGE TOOK HOURS!!!!
